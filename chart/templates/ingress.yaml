@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Chart.Name }}-ingress"
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /healthcheck
+            backend:
+              serviceName: "{{ .Chart.Name }}-service"
+              servicePort: 8080
+          - path: /fetch
+            backend:
+              serviceName: "{{ .Chart.Name }}-service"
+              servicePort: 8080
+          - path: /download_csv
+            backend:
+              serviceName: "{{ .Chart.Name }}-service"
+              servicePort: 8080

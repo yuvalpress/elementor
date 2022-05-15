@@ -1,0 +1,12 @@
+namespace: rickmorty
+
+deployment:
+  replicas: 2
+  image:
+    name: yuvalpress/rickmorty:1.0.0
+    pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
