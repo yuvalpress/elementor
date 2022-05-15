@@ -17,5 +17,7 @@ To build and run the docker image, use the following commands:
 3. Run the following command:
 ```helm install <chart_name> <path_to_chart_folder> -f <path_to_values_file>```
 
+## Git Actions Pipeline
+
 
 
