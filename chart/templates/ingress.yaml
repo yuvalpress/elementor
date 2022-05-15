@@ -10,14 +10,23 @@ spec:
     - http:
         paths:
           - path: /healthcheck
+            pathType: Exact
             backend:
-              serviceName: "{{ .Chart.Name }}-service"
-              servicePort: 8080
+              service:
+                name: "{{ .Chart.Name }}-service"
+                port:
+                  number: 8080
           - path: /fetch
+            pathType: Exact
             backend:
-              serviceName: "{{ .Chart.Name }}-service"
-              servicePort: 8080
+              service:
+                name: "{{ .Chart.Name }}-service"
+                port:
+                  number: 8080
           - path: /download_csv
+            pathType: Exact
             backend:
-              serviceName: "{{ .Chart.Name }}-service"
-              servicePort: 8080
+              service:
+                name: "{{ .Chart.Name }}-service"
+                port:
+                  number: 8080

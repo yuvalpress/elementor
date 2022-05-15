@@ -3,7 +3,7 @@ namespace: rickmorty
 deployment:
   replicas: 2
   image:
-    name: yuvalpress/rickmorty:1.0.0
+    name: yuvalpress/rickmorty:latest
     pullPolicy: IfNotPresent
 
 service:
