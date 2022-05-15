@@ -16,12 +16,12 @@ def get_character_info() -> list:
     character_info = list()
 
     for character in characters_list:
-        character_info.append({"name": character["name"], "location": character["origin"]["name"], "url": character["url"]})
+        character_info.append({"name": character["name"], "location": character["origin"]["name"], "image": character["image"]})
 
     return character_info
 
 def write_to_csv(rows: list):
-    header = ['name', 'location', 'url']
+    header = ['name', 'location', 'image']
 
     with open("./rickandmorty_CSV.csv", "w") as csv_file:
         
