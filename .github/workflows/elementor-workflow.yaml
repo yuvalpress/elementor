@@ -45,7 +45,7 @@ jobs:
         run: kubectl create ns rickmorty || true
 
       - name: Deploy the helm chart
-        run: helm install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml --wait
+        run: helm install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml --wait --timeout 20s
 
       - name: Expose service to local address 127.0.0.1
         run: kubectl port-forward svc/yuvalpress-rickmorty-service 8080:8080 -n rickmorty
