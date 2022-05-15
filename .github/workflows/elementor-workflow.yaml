@@ -21,15 +21,17 @@ jobs:
         with:
           push: true
           tags: yuvalpress/rickmorty:latest
-        
+
   create-cluster:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.2.0
+        with:
+          skipClusterDeletion: true
         
-  deploy-helm-chart:
+  test-helm-chart:
     runs-on: ubuntu-latest
     needs: create-cluster
     steps:
@@ -38,9 +40,13 @@ jobs:
         with:
           version: v3.8.1
 
-      - name: Check kubectl
+      - name: Configure kubectl context
         run: |
           kubectl config get-contexts
-          kubectl create ns rickmorty --context chart-testing || true
-          kubectl config set-context kind-kind
-          helm upgrade --install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
+          kubectl config set-context kind-chart-testing
+
+      - name: Create the rickmorty namespace
+        run: kubectl create ns rickmorty || true
+
+      - name: Deploy the helm chart
+        run: helm upgrade --install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
