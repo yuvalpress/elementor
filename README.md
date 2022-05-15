@@ -13,11 +13,15 @@ To build and run the docker image, use the following commands:
 
 ## Deploy HELM Chart
 1. run the command ```kubectl create namespace <name_of_namespace>```
-2. Change the namespace variable in the charts/values.yaml file to match the namespace name you created in the first command.
+2. Change the namespace variable in the charts/rickmorty/values.yaml file to match the namespace name you created in the first command.
 3. Run the following command:
 ```helm install <chart_name> <path_to_chart_folder> -f <path_to_values_file>```
 
 ## Git Actions Pipeline
-
+The pipeline is built with 4 jobs:
+1. Build the docker image (using secrets stored in the github project)
+2. Create a kubernetes test cluster to deploy the chart on.
+3. Deploy the HELM Chart to the temporary cluster.
+4. Check that the API is reachable.
 
 
