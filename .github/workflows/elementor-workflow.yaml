@@ -30,7 +30,6 @@ jobs:
         uses: engineerd/setup-kind@v0.5.0
         with:
           kubeconfig: $HOME/.kube/config
-          wait: 120s
         
   deploy-helm-chart:
     runs-on: ubuntu-latest
@@ -44,5 +43,6 @@ jobs:
       - name: Check kubectl
         run: |
           kubectl config get-contexts
-          kubectl create ns rickmorty || true
+          kubectl create ns rickmorty --context kind-kind || true
+          kubectl config set-context kind-kind
           helm upgrade --install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
