@@ -43,4 +43,7 @@ jobs:
         run: kubectl create ns rickmorty || true
 
       - name: Deploy the helm chart
-        run: helm upgrade --install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
+        run: |
+          ls -l
+          pwd
+          helm install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
