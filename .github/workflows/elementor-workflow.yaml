@@ -43,13 +43,13 @@ jobs:
           python-version: 3.8
 
       - name: Lint Helm Charts
-        uses: helm/chart-testing-action@v2.2.1
+        uses: helm/chart-testing-action@v1.0.0
         with:
           command: lint
           config: ct.yaml
 
       - name: Install Helm Charts
-        uses: helm/chart-testing-action@v2.2.1
+        uses: helm/chart-testing-action@v1.0.0
         with:
           command: install
           config: ct.yaml
