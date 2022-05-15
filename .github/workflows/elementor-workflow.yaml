@@ -27,7 +27,7 @@ jobs:
     needs: build
     steps:
       - name: Create k8s Kind Cluster
-        uses: helm/kind-action@v1.2.0
+        uses: engineerd/setup-kind@v0.5.0
         
   deploy-helm-chart:
     runs-on: ubuntu-latest
@@ -38,18 +38,8 @@ jobs:
         with:
           version: v3.8.1
 
-#      - name: Check kubectl
-#        run: |
-#          kubectl cluster-info
-#          kubectl create ns rickmorty || true
-#          helm upgrade --install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
-
-      - name: Set up chart-testing
-        uses: HexF/chart-testing-action@v3.0.0
-        with:
-          command: lint
-
-      - name: Run chart-testing (install)
-        uses: HexF/chart-testing-action@v3.0.0
-        with:
-          command: install
+      - name: Check kubectl
+        run: |
+          kubectl cluster-info
+          kubectl create ns rickmorty || true
+          helm upgrade --install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
