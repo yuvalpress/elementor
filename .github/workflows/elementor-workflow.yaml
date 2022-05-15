@@ -48,7 +48,9 @@ jobs:
         run: helm install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
 
       - name: Get Service External Address
-        run: LB_IP=$(kubectl get svc/yuvalpress-rickmorty-service -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+        run: |
+          kubectl get svc -A
+          LB_IP=$(kubectl get svc/yuvalpress-rickmorty-service -n rickmorty -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
       - name: Print LB Address
         run: echo $LB_IP
