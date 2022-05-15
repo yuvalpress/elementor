@@ -13,7 +13,7 @@ To build and run the docker image, use the following commands:
 
 ## Deploy HELM Chart
 1. run the command ```kubectl create namespace <name_of_namespace>```
-2. Change the namespace variable in the charts/rickmorty/values.yaml file to match the namespace name you created in the first command.
+2. Change the namespace variable in the charts/values.yaml file to match the namespace name you created in the first command.
 3. Run the following command:
 ```helm install <chart_name> <path_to_chart_folder> -f <path_to_values_file>```
 
