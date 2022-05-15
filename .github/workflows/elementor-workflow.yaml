@@ -50,7 +50,8 @@ jobs:
       - name: Get Service External Address
         run: |
           kubectl get svc -A
-          LB_IP=$(kubectl get svc/yuvalpress-rickmorty-service -n rickmorty -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          LB_IP = ""
+          while [ $LB_IP -eq "" ]; do LB_IP=$(kubectl get svc/yuvalpress-rickmorty-service -n rickmorty -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'); done
 
       - name: Print LB Address
         run: echo $LB_IP
@@ -58,4 +59,4 @@ jobs:
       - name: Test /healthcheck
         uses: wei/curl@master
         with:
-          args: https://$LB_IP:8080/healthcheck
+          args: "https://${LB_IP}:8080/healthcheck"
