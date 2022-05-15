@@ -38,18 +38,17 @@ jobs:
         with:
           version: v3.8.1
 
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+      - name: Check kubectl
+        run: |
+          kubectl cluster-info
+          kubectl create ns rickmorty || true
+          helm upgrade --install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
 
-      - name: Lint Helm Charts
-        uses: helm/chart-testing-action@v1.0.0
-        with:
-          command: lint
-          config: ct.yaml
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.2.1
 
-      - name: Install Helm Charts
-        uses: helm/chart-testing-action@v1.0.0
-        with:
-          command: install
-          config: ct.yaml
+      - name: Run chart-testing (lint)
+        run: ct lint
+
+      - name: Run chart-testing (install)
+        run: ct install
