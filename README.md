@@ -24,4 +24,7 @@ The pipeline is built with 4 jobs:
 3. Deploy the HELM Chart to the temporary cluster.
 4. Check that the API is reachable.
 
+The ct.yaml file in the root folder of the repository is used for the chart-testing action.
+
+
 
