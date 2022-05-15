@@ -47,16 +47,15 @@ jobs:
       - name: Deploy the helm chart
         run: helm install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml
 
-      - name: Get Service External Address
-        run: |
-          kubectl get svc -A
-          LB_IP=""
-          while [ $LB_IP -eq "" ]; do LB_IP=$(kubectl get svc/yuvalpress-rickmorty-service -n rickmorty -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'); done
-
-      - name: Print LB Address
-        run: echo $LB_IP
+      - name: Expose service to local address 127.0.0.1
+        run: kubectl port-forward svc/yuvalpress-rickmorty-service 8080:8080 -n rickmorty
 
       - name: Test /healthcheck
+        id: test_path
         uses: wei/curl@master
         with:
-          args: "https://${LB_IP}:8080/healthcheck"
+          args: "https://127.0.0.1:8080/healthcheck"
+
+      - name: Test Output
+        run: echo "API is live!"
+        if: steps.test_path.outputs.*
