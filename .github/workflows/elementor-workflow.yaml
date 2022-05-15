@@ -50,7 +50,7 @@ jobs:
       - name: Get Service External Address
         run: |
           kubectl get svc -A
-          LB_IP = ""
+          LB_IP=""
           while [ $LB_IP -eq "" ]; do LB_IP=$(kubectl get svc/yuvalpress-rickmorty-service -n rickmorty -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'); done
 
       - name: Print LB Address
