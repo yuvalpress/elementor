@@ -48,14 +48,12 @@ jobs:
         run: helm install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml --wait --timeout 20s
 
       - name: Expose service to local address 127.0.0.1
-        run: kubectl port-forward svc/yuvalpress-rickmorty-service 8080:8080 -n rickmorty
+        run: nohup kubectl port-forward svc/yuvalpress-rickmorty-service 8080:8080 -n rickmorty &
 
       - name: Test /healthcheck
         id: test_path
-        uses: wei/curl@master
-        with:
-          args: "https://127.0.0.1:8080/healthcheck"
+        run: echo "::set-output name={output}::$(curl https://127.0.0.1:8080/healthcheck)"
 
       - name: Test Output
         run: echo "API is live!"
-        if: steps.test_path.outputs.*
+        if: steps.test_path.outputs.

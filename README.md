@@ -18,13 +18,13 @@ To build and run the docker image, use the following commands:
 ```helm install <chart_name> <path_to_chart_folder> -f <path_to_values_file>```
 
 ## Git Actions Pipeline
-The pipeline is built with 4 jobs:
+The pipeline is built with 2 jobs:
 1. Build the docker image (using secrets stored in the github project)
-2. Create a kubernetes test cluster to deploy the chart on.
-3. Deploy the HELM Chart to the temporary cluster.
-4. Check that the API is reachable.
+2. Create a kubernetes test cluster, deploy the chart and check if the /healthcheck path exposed by the flask app is available.
 
-The ct.yaml file in the root folder of the repository is used for the chart-testing action.
+The kubernetes cluster is deployed using "kind" cluster.
+The helm installation is made using port-forwarding.
+The check itself is performed if 
 
 
 
