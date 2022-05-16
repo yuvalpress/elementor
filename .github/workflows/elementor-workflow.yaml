@@ -56,4 +56,4 @@ jobs:
 
       - name: Test Output
         run: echo "API is live!"
-        if: steps.test_path.outputs.output == "<h1>This API is live</h1>"
+        if: steps.test_path.outputs.output == '<h1>This API is live</h1>'
