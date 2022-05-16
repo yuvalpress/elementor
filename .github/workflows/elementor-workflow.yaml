@@ -52,7 +52,7 @@ jobs:
 
       - name: Test /healthcheck
         id: test_path
-        run: echo "::set-output name={output}::$(curl -s http://127.0.0.1:8080/healthcheck)"
+        run: echo "::set-output name=output::$(curl -s http://127.0.0.1:8080/healthcheck)"
 
       - name: print
         run: echo "${{ steps.test_path.outputs.output }}"
