@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Helm
+      - name: Set up Helm  # install helm tool
         uses: azure/setup-helm@v1
         with:
           version: v3.8.1
@@ -37,9 +37,7 @@ jobs:
         uses: helm/kind-action@v1.2.0
 
       - name: Configure kubectl context
-        run: |
-          kubectl config get-contexts
-          kubectl config set-context kind-chart-testing
+        run: kubectl config set-context kind-chart-testing
 
       - name: Create the rickmorty namespace
         run: kubectl create ns rickmorty || true
@@ -47,15 +45,12 @@ jobs:
       - name: Deploy the helm chart
         run: helm install rickmorty ./charts/rickmorty -f ./charts/rickmorty/values.yaml --wait --timeout 20s
 
-      - name: Expose service to local address 127.0.0.1
+      - name: Expose service to local address 127.0.0.1 # exposed for testing purposes (in the background)
         run: nohup kubectl port-forward svc/yuvalpress-rickmorty-service 8080:8080 -n rickmorty &
 
       - name: Test /healthcheck
         id: test_path
         run: echo "::set-output name=output::$(curl -s http://127.0.0.1:8080/healthcheck)"
-
-      - name: print
-        run: echo "${{ steps.test_path.outputs.output }}"
 
       - name: Test Output
         run: echo "API is live!"
