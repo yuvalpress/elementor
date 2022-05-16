@@ -50,6 +50,9 @@ jobs:
       - name: Expose service to local address 127.0.0.1
         run: nohup kubectl port-forward svc/yuvalpress-rickmorty-service 8080:8080 -n rickmorty &
 
+      - name: curl check
+        run: curl http://127.0.0.1:8080/healthcheck
+
       - name: Test /healthcheck
         id: test_path
         run: echo "::set-output name={output}::$(curl http://127.0.0.1:8080/healthcheck)"
