@@ -55,7 +55,7 @@ jobs:
         run: echo "::set-output name={output}::$(curl -s http://127.0.0.1:8080/healthcheck)"
 
       - name: print
-        run: echo ${steps.test_path.outputs.output}
+        run: echo "${{ steps.test_path.outputs.output }}"
 
       - name: Test Output
         run: echo "API is live!"
